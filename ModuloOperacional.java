@@ -1,13 +1,16 @@
 import java.io.*;
 import java.math.BigDecimal;
 import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Properties;
 
 public class ModuloOperacional {
 	private static Properties prop;
 	private static Mostrador most;
+	private static int serial;
 	
-	
+
+
 	private static boolean carregarConfiguracao()
 	{
 		prop = new Properties();
@@ -42,21 +45,6 @@ public class ModuloOperacional {
 		prop.setProperty(key, val);
 		return SalvarConfiguracao();
 	}
-	
-	
-	
-	public static void inicialização(){
-		carregarConfiguracao();
-		most = new Mostrador();
-	}
-	
-	public lerCartão(Cartao cartao)
-	{
-		most.mostrarMensagem(cartao.toString(), 30);
-	}
-	
-	
-	
 	public static void main(String[] args)
 	{
 		prop = new Properties();
@@ -69,15 +57,38 @@ public class ModuloOperacional {
 		prop.setProperty("TarifaIncremento", "0,25");
 		SalvarConfiguracao();
 	}
-	public static BigDecimal string2bigDec(String str){
+	private static BigDecimal string2bigDec(String str){
 		return new BigDecimal(str.replaceAll(",", "."));
 	}
-	public static long string2duration(String str){
+	private static long string2duration(String str){
 		long l = Long.parseLong(str);
 		return l*60*1000;
 	}
+	private static boolean resetSerial()
+	{
+		serial = 0;
+		return true;
+	}
 	
+	public static void inicialização(){
+		carregarConfiguracao();
+		most = new Mostrador();
+		serial = 0;
+	}
 	
+	private static boolean lerCartão(Cartao cartao)
+	{
+		return most.mostrarMensagem(cartao.toString(), 30);
+		
+	}
+	private static boolean criarTicket(long validade)
+	{
+		
+		new Ticket(prop.getProperty(id), prop.getProperty(Endereco), Integer.toString(serial, 5), LocalTime.now(), (LocalTime.now().plusMinutes(validade)));
+		
+	}
+	
+
 	
 	
 }
