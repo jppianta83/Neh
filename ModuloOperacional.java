@@ -76,7 +76,7 @@ public class ModuloOperacional {
 		serial = 0;
 	}
 	
-	private static boolean lerCartão(Cartao cartao)
+	private static boolean lerCartao(Cartao cartao)
 	{
 		return most.mostrarMensagem(cartao.toString(), 30);
 		
@@ -88,6 +88,25 @@ public class ModuloOperacional {
 		
 	}
 	
+	//Cuidado para nao explodir o tempo
+	private static boolean botaoMais(){
+		if (tempoEstadia >= Long.parseLong(prop.getProperty("TempoMaximo"))) 
+				return false;
+		tempoEstadia+= Long.parseLong(prop.getProperty("Incremento"));
+		return true;
+	}
+	
+	private static boolean botaoMenos(){
+		if (tempoEstadia <= Long.parseLong(prop.getProperty("TempoMinimo"))) 
+				return false;
+		tempoEstadia-= Long.parseLong(prop.getProperty("Incremento"));
+		return true;
+	}
+	
+	private static boolean botaoVerde(IPagamento pagamento){
+		//if()
+		return true;
+	}
 
 	
 	
