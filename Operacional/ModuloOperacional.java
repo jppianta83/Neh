@@ -11,6 +11,7 @@ public class ModuloOperacional {
 	private static int serial;
 	private static long tempoEstadia;
 	private static LocalTime horaUltimoPagamento = LocalTime.of(0,0);
+	private static TicketDao td;
 	
 	
 
@@ -97,12 +98,12 @@ public class ModuloOperacional {
 		return most.mostrarMensagem(cartao.toString(), 30);
 		
 	}
-	private static boolean criarTicket(long validade, IPagamento p)
+	private static boolean criarTicket(long validade, IPagamento p, BigDecimal tarifa)
 	{
 		String pagamento = "";
 		if(p instanceof PagamentoMoeda)pagamento = "Moeda";
 		else pagamento = "Cartão";
-		new Ticket(prop.getProperty("id"), prop.getProperty("Endereco"), Integer.toString(serial, 5), LocalTime.now(), (LocalTime.now().plusMinutes(validade)), pagamento);
+		new Ticket(prop.getProperty("id"), prop.getProperty("Endereco"), Integer.toString(serial, 5), LocalTime.now(), (LocalTime.now().plusMinutes(validade)), pagamento, tarifa);
 		return true;
 	}
 	//Cuidado para nao explodir o tempo
@@ -141,9 +142,9 @@ public class ModuloOperacional {
 		
 		if(LocalTime.now().compareTo(string2localTimeHrMin(prop.getProperty("InicioHorario")))==-1)return false;
 		if(LocalTime.now().compareTo(string2localTimeHrMin(prop.getProperty("FimHorario")))==1)return false;
-		
-		if(!pagamento.fazPagamento(calculaEstadia()))return false;
-		criarTicket(tempoEstadia, pagamento);
+		BigDecimal tarifa = calculaEstadia();
+		if(!pagamento.fazPagamento(tarifa))return false;
+		criarTicket(tempoEstadia, pagamento, tarifa);
 		tempoEstadia = 0;
 		horaUltimoPagamento = LocalTime.now();
 		
