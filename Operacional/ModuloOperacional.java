@@ -11,7 +11,7 @@ public class ModuloOperacional {
 	private static int serial;
 	private static long tempoEstadia;
 	private static LocalTime horaUltimoPagamento = LocalTime.of(0,0);
-	private static TicketDao td;
+	private static TicketDao td = new TicketDaoDerby();
 	
 	
 
@@ -103,7 +103,8 @@ public class ModuloOperacional {
 		String pagamento = "";
 		if(p instanceof PagamentoMoeda)pagamento = "Moeda";
 		else pagamento = "Cartão";
-		new Ticket(prop.getProperty("id"), prop.getProperty("Endereco"), Integer.toString(serial, 5), LocalTime.now(), (LocalTime.now().plusMinutes(validade)), pagamento, tarifa);
+		td.salvarTicket(new Ticket(prop.getProperty("id"), prop.getProperty("Endereco"), Integer.toString(serial, 5), LocalTime.now(), (LocalTime.now().plusMinutes(validade)), pagamento, tarifa));
+		
 		return true;
 	}
 	//Cuidado para nao explodir o tempo
