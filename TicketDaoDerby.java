@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.LinkedList;
 import java.io.*;
 
-public class TicketDaoDerby {
+public class TicketDaoDerby implements TicketDao {
 	private List<Ticket> tickets=null;
 	
 	
@@ -25,11 +25,16 @@ public class TicketDaoDerby {
 				return false;
 			}
 		} else {
-			FileOutputStream fis = new FileOutputStream("tickets.se");
-			ObjectOutputStream ois = new ObjectOutputStream(fis);
-			ois.writeObject(tickets);
-			ois.close();
-			fis.close();
+			try {
+				FileOutputStream fis = new FileOutputStream("tickets.se");
+				ObjectOutputStream ois = new ObjectOutputStream(fis);
+				ois.writeObject(tickets);
+				ois.close();
+				fis.close();
+			} catch (IOException i) {
+				i.printStackTrace();
+				return false;
+			}
 		}
 		in.close();
 		
