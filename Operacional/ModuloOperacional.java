@@ -92,14 +92,17 @@ public class ModuloOperacional {
 		tempoEstadia = Long.parseLong(prop.getProperty("TempoMinimo"));
 	}
 	
-	private static boolean lerCart√£o(Cartao cartao)
+	private static boolean lerCartao(Cartao cartao)
 	{
 		return most.mostrarMensagem(cartao.toString(), 30);
 		
 	}
-	private static boolean criarTicket(long validade)
+	private static boolean criarTicket(long validade, IPagamento p)
 	{
-		new Ticket(prop.getProperty("id"), prop.getProperty("Endereco"), Integer.toString(serial, 5), LocalTime.now(), (LocalTime.now().plusMinutes(validade)));
+		String pagamento = "";
+		if(p instanceof PagamentoMoeda)pagamento = "Moeda";
+		else pagamento = "Cart„o";
+		new Ticket(prop.getProperty("id"), prop.getProperty("Endereco"), Integer.toString(serial, 5), LocalTime.now(), (LocalTime.now().plusMinutes(validade)), pagamento);
 		return true;
 	}
 	//Cuidado para nao explodir o tempo
@@ -123,15 +126,26 @@ public class ModuloOperacional {
 		long tempo = tempoEstadia;
 		tempo -=  string2duration(prop.getProperty("TempoMinimo"));
 		tarifa.add(string2bigDec(prop.getProperty("TarifaInicial")));
-		
+		while(true)
+		{
+			if(tempo <= 0)break;
+			tempo -=  string2duration(prop.getProperty("Incremento"));
+			tarifa.add(string2bigDec(prop.getProperty("TarifaIncremento")));
+		}
+		return tarifa;
 	}
 	
 	
 	private static boolean botaoVerde(IPagamento pagamento){
 		if(LocalTime.now().compareTo(horaUltimoPagamento) == (-1)) resetSerial();
-		//if ..
 		
-		pagamento.fazPagamento(val);
+		if(LocalTime.now().compareTo(string2localTimeHrMin(prop.getProperty("InicioHorario")))==-1)return false;
+		if(LocalTime.now().compareTo(string2localTimeHrMin(prop.getProperty("FimHorario")))==1)return false;
+		
+		if(!pagamento.fazPagamento(calculaEstadia()))return false;
+		criarTicket(tempoEstadia, pagamento);
+		tempoEstadia = 0;
+		horaUltimoPagamento = LocalTime.now();
 		
 		return true;
 	}

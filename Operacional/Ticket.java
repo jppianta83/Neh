@@ -11,14 +11,6 @@ public class Ticket {
 	private LocalTime emissao;
 	private LocalTime validade;
 	
-	private static List<Ticket> tickets = new LinkedList<Ticket>();
-	private static TicketDao tk;
-	
-	public boolean salvarRelatorio()
-	{
-		boolean resposta = tk.salvarRelatorio(tickets) ;
-	
-	}	
 	public Ticket(String idParquimetro, String endereco, String serial, LocalTime emissao, LocalTime validade, String fpagamento) {
 		this.idParquimetro = idParquimetro;
 		this.endereco = endereco;
@@ -27,11 +19,35 @@ public class Ticket {
 		this.validade = validade;
 		pagamento=fpagamento;
 	}
+	
 	public String toString()
 	{
-		return idParquimetro + "-" + serial + " Endereço: " + endereco + " Emissão: " + emissao + " Validade: " + validade;
+		return idParquimetro + "-" + serial + " Endere�o: " + endereco + " Emissão: " + emissao + " Validade: " + validade + " Pagamento: " + pagamento;
+	}
+	
+	public String getIdParquimetro() {
+		return idParquimetro;
+	}
+	
+	public String getEndereco() {
+		return endereco;
+	}
+	
+	public String getSerial() {
+		return serial;
+	}
+	
+	public String getPagamento() {
+		return pagamento;
+	}
+	
+	public LocalTime getEmissao() {
+		return emissao;
+	}
+	
+	public LocalTime getValidade() {
+		return validade;
 	}
 
-	
 }
 
