@@ -29,7 +29,6 @@ public class ModuloGerencial {
 				return false;
 			}
 		}
-		in.close();
-		
+		return true;
 	}
 }
