@@ -40,4 +40,25 @@ public class TicketDaoDerby implements TicketDao {
 		
 	}
 	
+	public boolean salvarTicket(Ticket t) {
+		if (!carregar()) return false;
+		tickets.add(t);
+		if (!refresh()) return false;
+		return true;
+	}
+	
+	private boolean refresh() {
+		if (!carregar()) return false;
+		try {
+				FileOutputStream fis = new FileOutputStream("tickets.se");
+				ObjectOutputStream ois = new ObjectOutputStream(fis);
+				ois.writeObject(tickets);
+				ois.close();
+				fis.close();
+			} catch (IOException i) {
+				i.printStackTrace();
+				return false;
+			}
+	}
+	
 }
