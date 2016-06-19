@@ -15,7 +15,9 @@ public class ModuloOperacional {
 	
 	
 
-
+	/* garante false se der problema na leitura
+	 * garante true se nao der problema na leitura
+	 */
 	private static boolean carregarConfiguracao()
 	{
 		prop = new Properties();
@@ -31,6 +33,7 @@ public class ModuloOperacional {
 		}
 			return true;	
 	}
+	
 	private static boolean SalvarConfiguracao()
 	{
 		String path = "config";
@@ -45,11 +48,20 @@ public class ModuloOperacional {
 		}
 			return true;
 	}
+	
+	/*@ requires key != null
+	 *@ requires val != null
+	 *@ ensures \result ==> prop.containsKey(key)
+	 *@ ensures \result == false ==> !prop.containsKey(key) 
+	 */ 
 	private static boolean alterarConfiguracao(String key, String val)
 	{
+		if (!prop.containsKey(key)) return false;
 		prop.setProperty(key, val);
 		return SalvarConfiguracao();
 	}
+	
+	
 	public static void main(String[] args)
 	{
 		prop = new Properties();
@@ -62,30 +74,50 @@ public class ModuloOperacional {
 		prop.setProperty("TarifaIncremento", "0,25");
 		SalvarConfiguracao();
 	}
+	
+	/*@ requires str != null
+	 */
 	private static BigDecimal string2bigDec(String str){
 		return new BigDecimal(str.replaceAll(",", "."));
 	}
 	
+	/*@ requires str != null
+	 *@ ensures \result == Long.parseLong(str)*60*1000 
+	 */
 	private static long string2duration(String str){
 		long l = Long.parseLong(str);
 		return l*60*1000;
 	}
-	
+	//Apenas formato 00:00
+	/*@ requires data != null
+	 *@ requires data.charAt(2) == ':'
+	 *@ ensures \result == LocalTime.of(Integer.parseInt(data.split(":")[0]), Integer.parseInt(data.split(":")[1]))
+	 */
 	private static LocalTime string2localTimeHrMin(String data){
 		return LocalTime.of(Integer.parseInt(data.split(":")[0]), Integer.parseInt(data.split(":")[1]));	
 	}
+	
 	// Apenas para String com o formato 00:00:00
+	/*@ requires data != null
+	 *@ requires data.charAt(2) == ':' && data.charAt(5) == ':'
+	 *@ ensures \result == LocalTime.of(Integer.parseInt(data.split(":")[0]), Integer.parseInt(data.split(":")[1]), Integer.parseInt(data.split(":")[2]))
+	 */
 	private static LocalTime string2localTimeHrMinSeg(String data){
 		return LocalTime.of(Integer.parseInt(data.split(":")[0]), Integer.parseInt(data.split(":")[1]), Integer.parseInt(data.split(":")[2]));
 	}
 	
+	/*@ ensures serial == 0
+	 *@ ensures \result
+	 */
 	private static boolean resetSerial()
 	{
 		serial = 0;
 		return true;
 	}
 	
-	
+	/*@ ensures serial == 0
+	 *@ ensures tempoEstadia == Long.parseLong(prop.getProperty("TempoMinimo")) 
+	 */
 	public static void inicializacao(){
 		carregarConfiguracao();
 		most = new Mostrador();
@@ -93,11 +125,16 @@ public class ModuloOperacional {
 		tempoEstadia = Long.parseLong(prop.getProperty("TempoMinimo"));
 	}
 	
+	
 	private static boolean lerCartao(Cartao cartao)
 	{
 		return most.mostrarMensagem(cartao.toString(), 30);
 		
 	}
+	/*@ requires validade >= 0
+	 *@ requires p != null
+	 *@ requires tarifa.compareTo(BigDecimal.ZERO) == 1  
+	 */
 	private static boolean criarTicket(long validade, IPagamento p, BigDecimal tarifa)
 	{
 		String pagamento = "";
@@ -107,24 +144,32 @@ public class ModuloOperacional {
 		
 		return true;
 	}
-	//Cuidado para nao explodir o tempo
-	private static boolean botaoMais(){
-		
+	
+	/*@ ensures \result == false ==> (tempoEstadia + Long.parseLong(prop.getProperty("Incremento")) <= Long.parseLong(prop.getProperty("TempoMaximo"))) 
+	 *@ ensures tempoEstadia == (\old(tempoEstadia) + Long.parseLong(prop.getProperty("Incremento"))) ==> \result
+	 */
+	private static boolean botaoMais(){	
 		if ((tempoEstadia+Long.parseLong(prop.getProperty("Incremento")) > Long.parseLong(prop.getProperty("TempoMaximo"))))
 				return false;
 		tempoEstadia+= Long.parseLong(prop.getProperty("Incremento"));
 		return true;
 	}
 	
+	/*@ ensures \result == false ==> (tempoEstadia - Long.parseLong(prop.getProperty("Incremento")) <= Long.parseLong(prop.getProperty("TempoMinimo"))) 
+	 *@ ensures tempoEstadia == (\old(tempoEstadia) - Long.parseLong(prop.getProperty("Incremento"))) ==> \result
+	 */
 	private static boolean botaoMenos(){
-		if ( (tempoEstadia - Long.parseLong(prop.getProperty("Incremento")))  <= Long.parseLong(prop.getProperty("TempoMinimo"))) 
+		if ( (tempoEstadia - Long.parseLong(prop.getProperty("Incremento"))) <= Long.parseLong(prop.getProperty("TempoMinimo"))) 
 				return false;
 		tempoEstadia -= Long.parseLong(prop.getProperty("Incremento"));
 		return true;
 	}
 	
+	
+	/*@ ensures \result.compareTo(BigDecimal.ZERO) == 1 
+	 */
 	private static BigDecimal calculaEstadia(){
-		BigDecimal tarifa = new BigDecimal(0);
+		BigDecimal tarifa = BigDecimal.ZERO;
 		long tempo = tempoEstadia;
 		tempo -=  string2duration(prop.getProperty("TempoMinimo"));
 		tarifa.add(string2bigDec(prop.getProperty("TarifaInicial")));
@@ -137,8 +182,19 @@ public class ModuloOperacional {
 		return tarifa;
 	}
 	
+	// Precisa verificar quando é verdadeiro ?
 	
+	/*@ requires pagamento != null 
+	 *@ ensures ( LocalTime.now().compareTo(horaUltimoPagamento) == (-1) ) ==> serial == 1 
+	 *@ ensures \result == false ==> (LocalTime.now().compareTo(string2localTimeHrMin(prop.getProperty("InicioHorario")))==-1
+	 *@ 											|| LocalTime.now().compareTo(string2localTimeHrMin(prop.getProperty("FimHorario")))==1)
+	 *@ ensures \result false ==> !pagamento.fazPagamento(calculaEstadia())
+	 *@ ensures horaUltimoPagamento == LocalTime.now() ==> \result
+	 *@ ensures serial > \old(serial) ==> !(LocalTime.now().compareTo(horaUltimoPagamento) == (-1))
+	 *@ ensures tempoEstadia == 0 ==> \result
+	 */
 	private static boolean botaoVerde(IPagamento pagamento){
+		
 		if(LocalTime.now().compareTo(horaUltimoPagamento) == (-1)) resetSerial();
 		
 		if(LocalTime.now().compareTo(string2localTimeHrMin(prop.getProperty("InicioHorario")))==-1)return false;
@@ -148,13 +204,7 @@ public class ModuloOperacional {
 		criarTicket(tempoEstadia, pagamento, tarifa);
 		tempoEstadia = 0;
 		horaUltimoPagamento = LocalTime.now();
-		
+		serial++;
 		return true;
 	}
-	
-	
-	
-
-	
-	
 }
