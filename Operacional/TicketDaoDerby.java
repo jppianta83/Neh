@@ -36,7 +36,7 @@ public class TicketDaoDerby implements TicketDao {
 				return false;
 			}
 		}
-		in.close();
+		return true;
 		
 	}
 	
@@ -59,6 +59,7 @@ public class TicketDaoDerby implements TicketDao {
 				i.printStackTrace();
 				return false;
 			}
+		return true;
 	}
 	
 }
