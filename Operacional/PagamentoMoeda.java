@@ -9,13 +9,17 @@ public class PagamentoMoeda implements IPagamento {
 		moedas = m;
 	}
 	
+	
+	/* requires val.compareTo(BigDecimal.ZERO) == 1
+	 * garante se na lista moedas tem o valor de val, resultado true
+	 * caso contrario false
+	 */
 	@Override
 	public boolean fazPagamento(BigDecimal val) {
 		BigDecimal total = new BigDecimal(0.0);
 		Repositorio rep = Repositorio.getRepositorio();
 		for ( Moeda m : moedas ){
 			if (m == null) {
-				System.out.println("exceção moeda invalida!");
 				return false;
 			}
 			total = total.add(m.valorMoeda());

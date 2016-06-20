@@ -6,9 +6,13 @@ public class PagamentoCartao implements IPagamento{
 	public PagamentoCartao(Cartao umCartao){
 		car = umCartao;
 	}
-	
+	/* requires val.compareTo(BigDecimal.ZERO) == 1
+	 * ensures \result == false ==> car.getSaldo().compareTo(val)== -1
+	 * ensures \result ==> !(car.getSaldo().compareTo(val)== -1)
+	 * ensures car.getSaldo() == \old(car.getSaldo()).subtract(val)
+	 */
 	public boolean fazPagamento (BigDecimal val) {
-		if (car.getSaldo().compareTo(val)== -1){
+		if (!(car.getSaldo().compareTo(val)== -1)){
 			car.setSaldo(car.getSaldo().subtract(val));
 			return true;
 		}
