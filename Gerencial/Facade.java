@@ -3,11 +3,11 @@ import java.io.*;
 
 public class Facade{
 
-public List<String> logParquimetrosDia(String dia)
+public List<String> logParquimetroDia(String dia)
 {
 
 }
-public List<String> logParquimetrosMes(String mes)
+public List<String> logParquimetroMes(String mes)
 {
 
 }

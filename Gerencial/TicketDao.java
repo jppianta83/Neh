@@ -1,5 +1,5 @@
 import java.util.List;
 
 public interface TicketDao {
-	public List<Ticket> carregarTickets(String path);
+	public List<Ticket> carregarTickets();
 }
