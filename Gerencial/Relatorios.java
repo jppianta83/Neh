@@ -17,11 +17,20 @@ public class Relatorios
 		List<Ticket> tick = td.carregarTickets(path);
 		if(tick.size() == 0)return false;
 		
-		
-		
-		
+		for(Ticket t: tick)
+		{
+			if(parq.get(t.getIdParquimetro()) == null)
+			{
+				Parquimetro p = new Parquimetro(t.getIdParquimetro());
+				p.addTicket(t);
+				parq.put(t.getIdParquimetro(), p);
+			}
+			else
+			{
+				Parquimetro p = parq.get(t.getIdParquimetro());
+				p.addTicket(t);
+			}
+		}
 		return true;
-	}
-	
-	
+	}	
 }

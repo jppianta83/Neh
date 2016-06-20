@@ -1,5 +1,4 @@
 import java.util.List;
-import java.util.LinkedList;
 import java.io.*;
 
 public class TicketDaoDerby implements TicketDao {
