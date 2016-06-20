@@ -208,4 +208,12 @@ public class ModuloOperacional {
 		serial++;
 		return true;
 	}
+	
+	/* @ ensures \result
+	 * @ ensures tempoEstadia == 0
+	 */
+	private static boolean botaoVermelho(){
+		tempoEstadia = 0;
+		return true;
+	}
 }
