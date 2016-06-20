@@ -23,7 +23,7 @@ public class Ticket {
 		this.validade = validade;
 		this.pagamento = fpagamento;
 		this.valor = tarf;
-		data = LocalDate.now();
+		this.data = LocalDate.now();
 	}
 	
 	public LocalDate getData()
