@@ -6,25 +6,33 @@ public class Parquimetro{
 	private List<Ticket> tickets;	
 
 
+	
 	public Parquimetro(String idParquimetro)
 	{
 		this.idParquimetro = idParquimetro;
 	}
+	
+	//Requer um Ticket não nulo
+	//Garante que o ticket caso não tenha sido adicionado anteriormente seja adicionado a lista da Instancia tickets
 	public boolean addTicket(Ticket t)
 	{
 		if(!tickets.contains(t))tickets.add(t);;
 		return true;
 	}
 	
+	//Garante a String com o ID do Parquimetro
 	public String getID()
 	{
 		return idParquimetro;
 	}
 
+	//Garante a Lista com todos os Tickets do Parquimetro
 	public List<Ticket> getTickets()
 	{
 		return tickets;
 	}
+	
+	//Garante uma lista com a Descricao de todos os tickets na lista de tickets da Instancia
 	public List<String> getTicketsString()
 	{
 		List<String> resposta = new LinkedList<String>();
@@ -34,6 +42,9 @@ public class Parquimetro{
 		}
 		return resposta;
 	}
+	
+	//Requer uma string representando um dia no formato "dd-mm-yyyy"
+	//Garante uma lista de String com os logs dos tickets do dia especificado para o Parquimetro
 	public List<Ticket> getTicketsLogDia(String data)
 	{
 		//formato dd-mm-yyyy
@@ -52,6 +63,9 @@ public class Parquimetro{
 		}
 		return resposta;
 	}
+	
+	//Requer uma string representando um numero de 1 a 12 para cada mês do ano
+	//garante uma lista de String com os logs dos tickets no mes especificado para o Parquimetro	
 	public List<Ticket> getTicketsLogMes(String mes)
 	{
 		int mesS = Integer.parseInt(mes);
@@ -64,6 +78,9 @@ public class Parquimetro{
 		return resposta;
 	}
 	
+	//Requer uma string com o ID do parquimetro
+	//Garante que caso exista o parquimetro retorne uma Lista de Strings com o total de vendas do parquimetro agrupado por mês
+	//Garante que caso não exista o parquimetro que retorne uma Lista vazia
 	public List<String> getTicketsAno()
 	{
 		Map<Integer, Float> Ano = new HashMap<Integer, Float>();
@@ -89,6 +106,10 @@ public class Parquimetro{
 		}
 		return resposta;
 	}
+	
+	//Requer uma string com o ID do parquimetro
+	//Garante que caso exista o parquimetro retorne uma Lista de Strings com o total de vendas do parquimetro agrupado por ano
+	//Garante que caso não exista o parquimetro que retorne uma Lista vazia
 	public List<String> getTicketsMes()
 	{
 		Map<Integer, Map<Integer,Float>> Ano = new HashMap<Integer, Map<Integer,Float>>();

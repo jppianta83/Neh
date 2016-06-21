@@ -18,6 +18,10 @@ public class Relatorio
 		this.td = new TicketDaoDerby();
 		this.parq = new HashMap<String, Parquimetro>();
 	}
+	
+	//Requer uma string com o caminho de um arquivo
+	//Caso consiga carregar o arquivo garante true
+	//Caso não consiga carregar o arquivo garante false
 	public boolean carregarArquivo(String path)
 	{
 		List<Ticket> tick = td.carregarTickets(path);
@@ -39,10 +43,16 @@ public class Relatorio
 		}
 		return true;
 	}
+	
+	//Requer uma String com o ID de um parquimetro
+	//Garante caso exista o Parquimetro na CLasse relatorio a referencia para ele
+	//Caso não exista garante null
 	public Parquimetro getParquimetro(String parq)
 	{
 		return this.parq.get(parq);
 	}
+	
+	//Garante uma Lista com Strings do ID de todos os Parquimetros
 	public List<String> getListaParquimetros()
 	{
 		List<String> resposta = new LinkedList<String>();
