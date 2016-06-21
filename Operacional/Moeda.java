@@ -1,3 +1,4 @@
+package operacional;
 import java.math.BigDecimal;
 
 public enum Moeda {
@@ -9,7 +10,8 @@ public enum Moeda {
 			case VINTECINCO: return new BigDecimal(0.25);
 			case CINQUENTA: return new BigDecimal(0.50);
 			case DEZ: return new BigDecimal(0.10);
-			case CINCO: return new BigDecimal(0.05);
+			case CINCO: return BigDecimal.valueOf(0.05);
+			
 			default: return null;
 		}
 	}

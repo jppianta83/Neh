@@ -1,3 +1,4 @@
+package operacional;
 import java.io.*;
 import java.math.BigDecimal;
 import java.sql.Time;
@@ -55,7 +56,7 @@ public class ModuloOperacional {
 	 *@ ensures \result ==> prop.containsKey(key)
 	 *@ ensures \result == false ==> !prop.containsKey(key) 
 	 */ 
-	private static boolean alterarConfiguracao(String key, String val)
+	public static boolean alterarConfiguracao(String key, String val)
 	{
 		if (!prop.containsKey(key)) return false;
 		prop.setProperty(key, val);
@@ -127,7 +128,7 @@ public class ModuloOperacional {
 	}
 	
 	
-	private static boolean lerCartao(Cartao cartao)
+	public static boolean lerCartao(Cartao cartao)
 	{
 		return most.mostrarMensagem(cartao.toString(), 30);
 		
@@ -149,7 +150,7 @@ public class ModuloOperacional {
 	/*@ ensures \result == false ==> (tempoEstadia + Long.parseLong(prop.getProperty("Incremento")) <= Long.parseLong(prop.getProperty("TempoMaximo"))) 
 	 *@ ensures tempoEstadia == (\old(tempoEstadia) + Long.parseLong(prop.getProperty("Incremento"))) ==> \result
 	 */
-	private static boolean botaoMais(){	
+	public static boolean botaoMais(){	
 		if ((tempoEstadia+Long.parseLong(prop.getProperty("Incremento")) > Long.parseLong(prop.getProperty("TempoMaximo"))))
 				return false;
 		tempoEstadia+= Long.parseLong(prop.getProperty("Incremento"));
@@ -159,7 +160,7 @@ public class ModuloOperacional {
 	/*@ ensures \result == false ==> (tempoEstadia - Long.parseLong(prop.getProperty("Incremento")) <= Long.parseLong(prop.getProperty("TempoMinimo"))) 
 	 *@ ensures tempoEstadia == (\old(tempoEstadia) - Long.parseLong(prop.getProperty("Incremento"))) ==> \result
 	 */
-	private static boolean botaoMenos(){
+	public static boolean botaoMenos(){
 		if ( (tempoEstadia - Long.parseLong(prop.getProperty("Incremento"))) <= Long.parseLong(prop.getProperty("TempoMinimo"))) 
 				return false;
 		tempoEstadia -= Long.parseLong(prop.getProperty("Incremento"));
@@ -194,7 +195,7 @@ public class ModuloOperacional {
 	 *@ ensures serial == \old(serial+1) ==> (LocalDate.now().compareTo(dataUltimoPagamento) == 0)
 	 *@ ensures tempoEstadia == 0 ==> \result
 	 */
-	private static boolean botaoVerde(IPagamento pagamento){
+	public static boolean botaoVerde(IPagamento pagamento){
 		
 		if(!(LocalDate.now().compareTo(dataUltimoPagamento) == 0)) resetSerial();
 		
@@ -216,4 +217,5 @@ public class ModuloOperacional {
 		tempoEstadia = 0;
 		return true;
 	}
+
 }

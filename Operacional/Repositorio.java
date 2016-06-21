@@ -1,3 +1,4 @@
+package operacional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -8,12 +9,12 @@ import java.util.Map;
 
 public class Repositorio {
 	
-	private Map< Moeda , Integer > dic;  
+	public Map< Moeda , Integer > dic;  
 	private int totalMoedas;
 	private BigDecimal totalValor;
 	private static Repositorio rep;
 	
-	private Repositorio(){
+	public Repositorio(){
 		this.totalMoedas = 0;
 		this.totalValor = BigDecimal.ZERO;
 		dic = new HashMap< Moeda , Integer>();
@@ -42,6 +43,7 @@ public class Repositorio {
 		dic.put(m,(qtd + 1));
 		totalMoedas++;
 		totalValor = totalValor.add(m.valorMoeda());
+//		System.out.println(m.valorMoeda()+ " ->" + totalValor);
 		return true;
 	}
 	
@@ -64,12 +66,12 @@ public class Repositorio {
 	 */
 	public List<Moeda> troco(BigDecimal valorTroco){
 		List<Moeda> m = new ArrayList<Moeda>();
-		for( Moeda i : dic.keySet() ){
+		Moeda[] yourEnums = Moeda.class.getEnumConstants();
+		for( Moeda i : yourEnums ){
 			if(!removerMoeda(i)) continue;
 			if(valorTroco.compareTo(i.valorMoeda()) == (-1) ) 
 				{
-					this.addMoeda(i);
-					continue;
+					this.addMoeda(i); continue;
 				}
 			m.add(i);
 			m.addAll(this.troco(valorTroco.subtract(i.valorMoeda())));
@@ -78,18 +80,32 @@ public class Repositorio {
 		return m;
 	}
 	
-//	public static void main(String[] args){
-//	
-//		Repositorio temp = Repositorio.getRepositorio();
-//		for(int i = 0; i < 8; i++)temp.addMoeda(Moeda.VINTECINCO);
-//		for(int i = 0; i < 5; i++)temp.addMoeda(Moeda.CINCO);
-//		for(int i = 0; i < 2; i++)temp.addMoeda(Moeda.UM);
-//		System.out.println(temp.dic);
-//		BigDecimal bd = new BigDecimal(1.58);
-//		List<Moeda> lista = temp.troco(bd);
-//		System.out.println(temp.dic);
-//		System.out.println(lista);
-//	}
+	public int getTotalMoeda()
+	{
+		return totalMoedas;
+	}
+	
+	public BigDecimal getTotalValor()
+	{
+		return totalValor;
+	}
+	
+	public static void main(String[] args){
+	
+		Repositorio temp = Repositorio.getRepositorio();
+		for(int i = 0; i < 8; i++)temp.addMoeda(Moeda.VINTECINCO);
+		for(int i = 0; i < 5; i++)temp.addMoeda(Moeda.CINCO);
+		for(int i = 0; i < 2; i++)temp.addMoeda(Moeda.UM);
+		System.out.println(temp.dic);
+		BigDecimal bd = new BigDecimal(4.22);
+		List<Moeda> lista = temp.troco(bd);
+		System.out.println(temp.dic);
+		System.out.println(lista);
+		BigDecimal totalTroco = BigDecimal.ZERO;
+    	for ( Moeda m : lista )
+    		totalTroco = totalTroco.add(m.valorMoeda());
+    	System.out.println(totalTroco);
+	}
 	
 
 }
