@@ -1,4 +1,4 @@
-package operacional;
+package Operacional;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalTime;

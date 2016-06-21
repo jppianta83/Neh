@@ -1,4 +1,4 @@
-package operacional;
+package Operacional;
 import java.util.List;
 
 public interface TicketDao {

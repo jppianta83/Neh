@@ -1,4 +1,4 @@
-package operacional;
+package Operacional;
 import java.util.*;
 import java.time.LocalDate;
 
@@ -19,8 +19,13 @@ public class Parquimetro{
 	//Garante que o ticket caso não tenha sido adicionado anteriormente seja adicionado a lista da Instancia tickets
 	public boolean addTicket(Ticket t)
 	{
-		System.out.println("Ticket " + t.toString());
-		if(!tickets.contains(t))tickets.add(t);;
+		
+		for(Ticket te: tickets)
+		{
+			if(te.getData().isEqual(t.getData()) && (te.getEmissao().equals(t.getEmissao())))return false;
+		}
+		System.out.println(t.valor().floatValue());
+		tickets.add(t);
 		return true;
 	}
 	

@@ -1,4 +1,4 @@
-package operacional;
+package Operacional;
 import java.util.List;
 import java.io.*;
 
@@ -13,7 +13,7 @@ public class TicketDaoDerby implements TicketDao {
 				FileInputStream fis = new FileInputStream(path);
 				ObjectInputStream ois = new ObjectInputStream(fis);
 				tickets = (List<Ticket>) ois.readObject();
-				System.out.println("Tickets: "+tickets.size());
+
 				fis.close();
 				ois.close();
 			} catch (IOException i) {
