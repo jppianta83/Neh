@@ -1,9 +1,11 @@
+package operacional;
+
 import java.util.List;
 import java.util.LinkedList;
 import java.io.*;
 
 public class TicketDaoDerby implements TicketDao {
-	private List<Ticket> tickets=null;
+	private List<Ticket> tickets;
 	
 	
 	private boolean carregar() {
@@ -13,19 +15,20 @@ public class TicketDaoDerby implements TicketDao {
 			try {
 				FileInputStream fis = new FileInputStream("tickets.se");
 				ObjectInputStream ois = new ObjectInputStream(fis);
-				tickets = (List<Ticket>) ois.readObject();
+				this.tickets = (List<Ticket>) ois.readObject();
 				fis.close();
 				ois.close();
-			} catch (IOException i) {
-				i.printStackTrace();
-				return false;
-			} catch(ClassNotFoundException c) {
-				System.out.println("classe ticket n existe");
+			} 
+			catch(ClassNotFoundException c) {
 				c.printStackTrace();
 				return false;
-			}
+			}catch (Exception i) {
+				System.out.println(i.toString());
+				return false;
+			} 
 		} else {
 			try {
+				this.tickets = new LinkedList<Ticket>();
 				FileOutputStream fis = new FileOutputStream("tickets.se");
 				ObjectOutputStream ois = new ObjectOutputStream(fis);
 				ois.writeObject(tickets);
@@ -48,14 +51,16 @@ public class TicketDaoDerby implements TicketDao {
 	}
 	
 	private boolean refresh() {
-		if (!carregar()) return false;
+		//if (!carregar()) return false;
 		try {
+				
 				FileOutputStream fis = new FileOutputStream("tickets.se");
 				ObjectOutputStream ois = new ObjectOutputStream(fis);
 				ois.writeObject(tickets);
 				ois.close();
 				fis.close();
-			} catch (IOException i) {
+			} catch (Exception i) {
+				System.out.println(i.toString());
 				i.printStackTrace();
 				return false;
 			}

@@ -11,8 +11,8 @@ public class ModuloOperacional {
 	private static Properties prop;
 	private static Mostrador most;
 	private static int serial;
-	private static long tempoEstadia;
-	private static LocalDate dataUltimoPagamento = LocalDate.of(0,0,0);
+	public static long tempoEstadia;
+	private static LocalDate dataUltimoPagamento = LocalDate.of(1990,1,1);
 	private static TicketDao td = new TicketDaoDerby();
 	
 	
@@ -149,6 +149,7 @@ public class ModuloOperacional {
 	
 	/*@ ensures \result == false ==> (tempoEstadia + Long.parseLong(prop.getProperty("Incremento")) <= Long.parseLong(prop.getProperty("TempoMaximo"))) 
 	 *@ ensures tempoEstadia == (\old(tempoEstadia) + Long.parseLong(prop.getProperty("Incremento"))) ==> \result
+	 *@ ensures \result => !(tempoEstadia + Long.parseLong(prop.getProperty("Incremento")) <= Long.parseLong(prop.getProperty("TempoMaximo"))) 
 	 */
 	public static boolean botaoMais(){	
 		if ((tempoEstadia+Long.parseLong(prop.getProperty("Incremento")) > Long.parseLong(prop.getProperty("TempoMaximo"))))
@@ -159,6 +160,7 @@ public class ModuloOperacional {
 	
 	/*@ ensures \result == false ==> (tempoEstadia - Long.parseLong(prop.getProperty("Incremento")) <= Long.parseLong(prop.getProperty("TempoMinimo"))) 
 	 *@ ensures tempoEstadia == (\old(tempoEstadia) - Long.parseLong(prop.getProperty("Incremento"))) ==> \result
+	 *ensures \result ==> !(tempoEstadia - Long.parseLong(prop.getProperty("Incremento")) <= Long.parseLong(prop.getProperty("TempoMinimo"))) 
 	 */
 	public static boolean botaoMenos(){
 		if ( (tempoEstadia - Long.parseLong(prop.getProperty("Incremento"))) <= Long.parseLong(prop.getProperty("TempoMinimo"))) 
@@ -204,7 +206,7 @@ public class ModuloOperacional {
 		BigDecimal tarifa = calculaEstadia();
 		if(!pagamento.fazPagamento(tarifa))return false;
 		criarTicket(tempoEstadia, pagamento, tarifa);
-		tempoEstadia = 0;
+		tempoEstadia = Long.parseLong(prop.getProperty("TempoMinimo"));
 		dataUltimoPagamento = LocalDate.now();
 		serial++;
 		return true;
@@ -214,7 +216,7 @@ public class ModuloOperacional {
 	 * @ ensures tempoEstadia == 0
 	 */
 	private static boolean botaoVermelho(){
-		tempoEstadia = 0;
+		tempoEstadia = Long.parseLong(prop.getProperty("TempoMinimo"));
 		return true;
 	}
 

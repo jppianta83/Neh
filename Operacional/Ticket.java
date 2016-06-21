@@ -1,19 +1,23 @@
+
+package operacional;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.time.LocalDate;
 
-public class Ticket {
+public class Ticket implements Serializable {
 
 	private String idParquimetro;
 	private String endereco;
 	private String serial;
 	private String pagamento;
-	private BigDecimal valor;
-	private LocalTime emissao;
-	private LocalTime validade;
-	private LocalDate data;
+	private  BigDecimal  valor;
+	private  LocalTime emissao;
+	private  LocalTime validade;
+	private  LocalDate data;
 	
 	public Ticket(String idParquimetro, String endereco, String serial, LocalTime emissao, LocalTime validade, String fpagamento, BigDecimal tarf) {
 		this.idParquimetro = idParquimetro;
