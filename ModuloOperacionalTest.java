@@ -6,6 +6,7 @@ import operacional.PagamentoCartao;
 import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +15,12 @@ public class ModuloOperacionalTest {
 
     private PagamentoCartao pc;
     private Cartao c;
+    private PagamentoCartao pc2;
+    private Cartao c2;
+    private PagamentoCartao pc3;
+    private Cartao c3;
+    private PagamentoCartao pc4;
+    private Cartao c4;
     
 	    @Before
 	    public void setUp() throws Exception {
@@ -21,10 +28,21 @@ public class ModuloOperacionalTest {
 	        String strValida = "";
 	    	for (int i=0; i<128;i++)
 	    		strValida += "1";
-	    	BigDecimal bd = new BigDecimal(3.00);
+	    	BigDecimal bd = BigDecimal.valueOf(20.00);
 	    	c = new Cartao (strValida, bd);
-	    	
-	    	pc = new PagamentoCartao(c); 
+	    	pc = new PagamentoCartao(c);
+	    	strValida = strValida.replace('1', '2');
+	    	BigDecimal bd2 = BigDecimal.valueOf(30.00);
+	    	c2 = new Cartao (strValida, bd2);
+	    	pc2 = new PagamentoCartao(c2);
+	    	strValida = strValida.replace('2', '3');
+	    	BigDecimal bd3 = BigDecimal.valueOf(10.00);
+	    	c3 = new Cartao (strValida, bd3);
+	    	pc3 = new PagamentoCartao(c3); 
+	    	strValida = strValida.replace('3', '4');
+	    	BigDecimal bd4 = BigDecimal.valueOf(15.00);
+	    	c4 = new Cartao (strValida, bd4);
+	    	pc4 = new PagamentoCartao(c4);
 	    }
 
 	    @Test
@@ -60,9 +78,26 @@ public class ModuloOperacionalTest {
 	    }
 	    
 	    @Test
-	    public void testBotaoVerde()
+	    public void testBotaoVerde() throws InterruptedException
 	    {
-	    	assertTrue(ModuloOperacional.botaoVerde(pc));
+	    	for(int i = 0; i<5 ; i++)
+	    		ModuloOperacional.botaoMais();
+	    	System.out.println(ModuloOperacional.tempoEstadia);
+	    	ModuloOperacional.botaoVerde(pc);
+	    	System.out.println(ModuloOperacional.tempoEstadia);
+	    	System.out.println("Muda hora");
+	    	TimeUnit.SECONDS.sleep(10);
+	    	for(int i = 0; i<2 ; i++)
+	    		ModuloOperacional.botaoMais();
+	    	ModuloOperacional.botaoVerde(pc2);
+	    	System.out.println("Muda dia");
+	    	TimeUnit.SECONDS.sleep(10);
+	    	for(int i = 0; i<3 ; i++)
+	    		ModuloOperacional.botaoMais();
+	    	ModuloOperacional.botaoVerde(pc3);
+	    	System.out.println("Muda hora");
+	    	TimeUnit.SECONDS.sleep(10);
+	    	assertTrue(ModuloOperacional.botaoVerde(pc4));
 	    }
 	    
 

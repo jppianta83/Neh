@@ -32,22 +32,31 @@ public class RepositorioTest {
     	for(int i = 0; i < 8; i++)rep.addMoeda(Moeda.VINTECINCO);
     	for(int i = 0; i < 5; i++)rep.addMoeda(Moeda.CINCO);
     	for(int i = 0; i < 2; i++)rep.addMoeda(Moeda.UM);
-    	System.out.println(rep.getTotalValor());
     	assertTrue(rep.getTotalValor().compareTo(BigDecimal.valueOf(4.25))== 0);
     }
 
     @Test
-    public void testTroco() {
+    public void testTrocoCentavosMaximo() {
     	for(int i = 0; i < 8; i++)rep.addMoeda(Moeda.VINTECINCO);
     	for(int i = 0; i < 5; i++)rep.addMoeda(Moeda.CINCO);
     	for(int i = 0; i < 2; i++)rep.addMoeda(Moeda.UM);
-    	BigDecimal bd = new BigDecimal(3.22);
+    	BigDecimal bd = new BigDecimal(3.19);
     	List<Moeda> lista = rep.troco(bd);
-    	System.out.println(lista);
     	BigDecimal totalTroco = BigDecimal.ZERO;
     	for ( Moeda m : lista )
     		totalTroco = totalTroco.add(m.valorMoeda());
-    	System.out.println(totalTroco);
+        assertTrue( totalTroco.compareTo(BigDecimal.valueOf(3.15))== 0 );
+    }
+    @Test
+    public void testTrocoCentavosMinimo() {
+    	for(int i = 0; i < 8; i++)rep.addMoeda(Moeda.VINTECINCO);
+    	for(int i = 0; i < 5; i++)rep.addMoeda(Moeda.CINCO);
+    	for(int i = 0; i < 2; i++)rep.addMoeda(Moeda.UM);
+    	BigDecimal bd = new BigDecimal(3.21);
+    	List<Moeda> lista = rep.troco(bd);
+    	BigDecimal totalTroco = BigDecimal.ZERO;
+    	for ( Moeda m : lista )
+    		totalTroco = totalTroco.add(m.valorMoeda());
         assertTrue( totalTroco.compareTo(BigDecimal.valueOf(3.20))== 0 );
     }
     

@@ -22,26 +22,29 @@ public class PagamentoMoedaTest {
 	    	for(int i = 0; i < 2; i++)moedasPag.add(Moeda.UM);
 	    	for(int i = 0; i < 3; i++)moedasPag.add(Moeda.DEZ);
 	    	for(int i = 0; i < 1; i++)moedasPag.add(Moeda.CINQUENTA);
-	    	// moedasPag = 2,70
+	    	// moedasPag = 2,80
 	    	pm = new PagamentoMoeda(moedasPag); 
 	    }
 
 	    @Test
 	    public void testPagamentoEmMoedaValorExato() {
-	    	BigDecimal bd = new BigDecimal(2.70);
+	    	BigDecimal bd = BigDecimal.valueOf(2.00);
 	    	assertTrue(pm.fazPagamento(bd));
+	    	System.out.println("Sucesso!"+" Valor Moedas Inseridas: 2.80" + " Pagamento: "+ bd + " Troco:" + pm.mostrarTroco());
 	    }
 	    
 	    @Test
 	    public void testPagamentoEmMoedaFalta() {
-	    	BigDecimal bd = new BigDecimal(2.90);
+	    	BigDecimal bd = BigDecimal.valueOf(2.90);
 	    	assertFalse(pm.fazPagamento(bd));
+	    	System.out.println("Valor Insuficiente!" + " Valor Moedas Inseridas: 2.80" + " Pagamento: "+ bd + " Troco:" + pm.mostrarTroco());
 	    }
 	    
 	    @Test
 	    public void testPagamentoEmMoedaValorMaior() {
-	    	BigDecimal bd = new BigDecimal(2.50);
+	    	BigDecimal bd = BigDecimal.valueOf(2.50);
 	    	assertTrue(pm.fazPagamento(bd));
+	    	System.out.println("Sucesso!"+" Valor Moedas Inseridas: 2.80" + " Pagamento: "+ bd + " Troco:" + pm.mostrarTroco());
 	    }
 
 }
