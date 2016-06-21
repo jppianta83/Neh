@@ -1,6 +1,8 @@
+package operacional;
+
 import java.math.BigDecimal;
 
-class Cartao {
+public class Cartao {
 	private String code;
 	
 	private BigDecimal saldo;
@@ -9,11 +11,11 @@ class Cartao {
 	 * saldo == new BigDecimal(val)
 	 * code == x
 	 */
-	public Cartao(String x, double val) throws CartaoException {
+	public Cartao(String x, BigDecimal val) throws CartaoException {
 		if(x.length()!=128) {
 			throw new CartaoException("Codigo invalido");		
 		}
-		saldo=new BigDecimal(val);
+		saldo=val;
 		code=x;
 	}
 	
@@ -23,4 +25,9 @@ class Cartao {
 	 * ensures saldo == x
 	 */
 	public void setSaldo(BigDecimal x) {saldo=x;}
+	
+	@Override
+	public String toString (){
+		return "Codigo:" + code + "\nSaldo: " + saldo; 
+	}
 }

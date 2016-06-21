@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class Repositorio {
 	
-	public Map< Moeda , Integer > dic;  
+	private Map< Moeda , Integer > dic;  
 	private int totalMoedas;
 	private BigDecimal totalValor;
 	private static Repositorio rep;
