@@ -1,3 +1,4 @@
+package operacional;
 import java.util.*;
 import java.io.*;
 
@@ -62,7 +63,11 @@ public List<String> logParquimetrosMes(String mes)
 //Garante que caso não exista o parquimetro que retorne uma Lista vazia
 public List<String> relatorioParquimetroMes(String parquimetro) 
 {
-	return Relatorio.get().getParquimetro(parquimetro).getTicketsMes();
+	List<String> resposta = new LinkedList<String>();
+	Parquimetro p = Relatorio.get().getParquimetro(parquimetro);
+	if(p == null)return resposta;
+	resposta.addAll(p.getTicketsMes());
+	return resposta;
 }
 
 //Requer uma string com o ID do parquimetro
@@ -70,7 +75,11 @@ public List<String> relatorioParquimetroMes(String parquimetro)
 //Garante que caso não exista o parquimetro que retorne uma Lista vazia
 public List<String> relatorioParquimetroAno(String parquimetro) 
 {
-	return Relatorio.get().getParquimetro(parquimetro).getTicketsAno();
+	List<String> resposta = new LinkedList<String>();
+	Parquimetro p = Relatorio.get().getParquimetro(parquimetro);
+	if(p == null)return resposta;
+	resposta.addAll(p.getTicketsAno());
+	return resposta;
 }
 
 //Requer uma string com o caminho de um arquivo

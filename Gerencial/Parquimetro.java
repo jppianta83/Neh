@@ -1,3 +1,4 @@
+package operacional;
 import java.util.*;
 import java.time.LocalDate;
 
@@ -9,13 +10,16 @@ public class Parquimetro{
 	
 	public Parquimetro(String idParquimetro)
 	{
+		this.tickets = new LinkedList<Ticket>();
 		this.idParquimetro = idParquimetro;
+		
 	}
 	
 	//Requer um Ticket não nulo
 	//Garante que o ticket caso não tenha sido adicionado anteriormente seja adicionado a lista da Instancia tickets
 	public boolean addTicket(Ticket t)
 	{
+		System.out.println("Ticket " + t.toString());
 		if(!tickets.contains(t))tickets.add(t);;
 		return true;
 	}

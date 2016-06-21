@@ -1,3 +1,4 @@
+package operacional;
 import java.util.List;
 import java.io.*;
 
@@ -12,13 +13,13 @@ public class TicketDaoDerby implements TicketDao {
 				FileInputStream fis = new FileInputStream(path);
 				ObjectInputStream ois = new ObjectInputStream(fis);
 				tickets = (List<Ticket>) ois.readObject();
+				System.out.println("Tickets: "+tickets.size());
 				fis.close();
 				ois.close();
 			} catch (IOException i) {
 				i.printStackTrace();
 				return false;
 			} catch(ClassNotFoundException c) {
-				System.out.println("classe ticket n existe");
 				c.printStackTrace();
 				return false;
 			}
