@@ -1,3 +1,5 @@
+package operacional;
+
 import java.math.BigDecimal;
 
 public interface IPagamento {

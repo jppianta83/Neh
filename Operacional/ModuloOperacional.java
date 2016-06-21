@@ -169,19 +169,20 @@ public class ModuloOperacional {
 		return true;
 	}
 	
-	
-	/*@ ensures \result.compareTo(BigDecimal.ZERO) == 1 
+	// garante que o valor esta entre 0.75 e 3.00
+	/*@ ensures \result.compareTo(BigDecimal.valueOf(0.74)) == 1
+	 *@ ensures \result.compareTo(BigDecimal.valueOf(3.01)) == (-1) 
 	 */
-	private static BigDecimal calculaEstadia(){
+	public static BigDecimal calculaEstadia(){
 		BigDecimal tarifa = BigDecimal.ZERO;
 		long tempo = tempoEstadia;
-		tempo -=  string2duration(prop.getProperty("TempoMinimo"));
-		tarifa.add(string2bigDec(prop.getProperty("TarifaInicial")));
+		tempo -=  Long.parseLong(prop.getProperty("TempoMinimo"));
+		tarifa = tarifa.add(string2bigDec(prop.getProperty("TarifaInicial")));
 		while(true)
 		{
 			if(tempo <= 0)break;
-			tempo -=  string2duration(prop.getProperty("Incremento"));
-			tarifa.add(string2bigDec(prop.getProperty("TarifaIncremento")));
+			tempo -=  Long.parseLong(prop.getProperty("Incremento"));
+			tarifa = tarifa.add(string2bigDec(prop.getProperty("TarifaIncremento")));
 		}
 		return tarifa;
 	}
@@ -195,7 +196,7 @@ public class ModuloOperacional {
 	 *@ ensures \result false ==> !pagamento.fazPagamento(calculaEstadia())
 	 *@ ensures horaUltimoPagamento == LocalTime.now() ==> \result
 	 *@ ensures serial == \old(serial+1) ==> (LocalDate.now().compareTo(dataUltimoPagamento) == 0)
-	 *@ ensures tempoEstadia == 0 ==> \result
+	 *@ ensures tempoEstadia == Long.parseLong(prop.getProperty("TempoMinimo"))
 	 */
 	public static boolean botaoVerde(IPagamento pagamento){
 		
@@ -204,7 +205,12 @@ public class ModuloOperacional {
 		if(LocalTime.now().compareTo(string2localTimeHrMin(prop.getProperty("InicioHorario")))==-1)return false;
 		if(LocalTime.now().compareTo(string2localTimeHrMin(prop.getProperty("FimHorario")))==1)return false;
 		BigDecimal tarifa = calculaEstadia();
-		if(!pagamento.fazPagamento(tarifa))return false;
+//		System.out.println(tempoEstadia + "-" + tarifa);
+		if(!pagamento.fazPagamento(tarifa))
+			{
+			tempoEstadia = Long.parseLong(prop.getProperty("TempoMinimo"));
+			return false;
+			}
 		criarTicket(tempoEstadia, pagamento, tarifa);
 		tempoEstadia = Long.parseLong(prop.getProperty("TempoMinimo"));
 		dataUltimoPagamento = LocalDate.now();
@@ -215,7 +221,7 @@ public class ModuloOperacional {
 	/* @ ensures \result
 	 * @ ensures tempoEstadia == 0
 	 */
-	private static boolean botaoVermelho(){
+	public static boolean botaoVermelho(){
 		tempoEstadia = Long.parseLong(prop.getProperty("TempoMinimo"));
 		return true;
 	}

@@ -6,11 +6,16 @@ import java.util.List;
 public class PagamentoMoeda implements IPagamento {
 
 	private List<Moeda> moedas;
+	private List<Moeda> troco;
 	
 	public PagamentoMoeda(List<Moeda> m){
 		moedas = m;
 	}
 	
+	public List<Moeda> mostrarTroco()
+	{
+		return troco;
+	}
 	
 	/* requires val.compareTo(BigDecimal.ZERO) == 1
 	 * garante se na lista moedas tem o valor de val, resultado true
@@ -26,9 +31,13 @@ public class PagamentoMoeda implements IPagamento {
 			}
 			total = total.add(m.valorMoeda());
 		}
-		if (total.compareTo(val)==(-1)) return false;
+		if (total.compareTo(val)==(-1)) 
+		{
+		troco = moedas;
+		return false;
+		}
 		for ( Moeda m : moedas ) rep.addMoeda(m);
-		rep.troco(total.subtract(val));
+		troco = rep.troco(total.subtract(val));
 		return true;
 	}
 
