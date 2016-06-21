@@ -43,13 +43,12 @@ public class RepositorioTest {
     	for(int i = 0; i < 2; i++)rep.addMoeda(Moeda.UM);
     	BigDecimal bd = new BigDecimal(3.22);
     	List<Moeda> lista = rep.troco(bd);
-    	System.out.println(rep.dic);
     	System.out.println(lista);
     	BigDecimal totalTroco = BigDecimal.ZERO;
     	for ( Moeda m : lista )
     		totalTroco = totalTroco.add(m.valorMoeda());
     	System.out.println(totalTroco);
-        assertTrue( true );
+        assertTrue( totalTroco.compareTo(BigDecimal.valueOf(3.20))== 0 );
     }
     
     
