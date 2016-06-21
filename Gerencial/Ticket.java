@@ -2,16 +2,18 @@ import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.time.LocalDate;
 
-public class Ticket {
+import java.io.Serializable;
+
+public class Ticket implements Serializable {
 
 	private String idParquimetro;
 	private String endereco;
 	private String serial;
 	private String pagamento;
-	private BigDecimal valor;
-	private LocalTime emissao;
-	private LocalTime validade;
-	private LocalDate data;
+	private  BigDecimal  valor;
+	private  LocalTime emissao;
+	private  LocalTime validade;
+	private  LocalDate data;
 	
 	public Ticket(String idParquimetro, String endereco, String serial, LocalTime emissao, LocalTime validade, String fpagamento, BigDecimal tarf) {
 		this.idParquimetro = idParquimetro;
@@ -21,7 +23,7 @@ public class Ticket {
 		this.validade = validade;
 		this.pagamento = fpagamento;
 		this.valor = tarf;
-		this.data = LocalDate.now();
+		data = LocalDate.now();
 	}
 	
 	public LocalDate getData()
@@ -31,7 +33,7 @@ public class Ticket {
 	
 	public String toString()
 	{
-		return idParquimetro + "-" + serial + " Endere�o: " + endereco + " Emissão: " + emissao + " Validade: " + validade + " Pagamento: " + pagamento + " Data: " + data;
+		return idParquimetro + "-" + serial + " Endereco: " + endereco + " Emissão: " + emissao + " Validade: " + validade + " Pagamento: " + pagamento + " Data: " + data;
 	}
 	
 	public String getIdParquimetro() {

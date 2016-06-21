@@ -12,7 +12,7 @@ public class Parquimetro{
 	}
 	public boolean addTicket(Ticket t)
 	{
-		tickets.add(t);
+		if(!tickets.contains(t))tickets.add(t);;
 		return true;
 	}
 	
@@ -34,7 +34,7 @@ public class Parquimetro{
 		}
 		return resposta;
 	}
-	public List<String> getTicketsLogDia(String data)
+	public List<Ticket> getTicketsLogDia(String data)
 	{
 		//formato dd-mm-yyyy
 		String[] vetorString = data.split("-");
@@ -45,14 +45,24 @@ public class Parquimetro{
 		LocalDate dt = LocalDate.of(ano, mes, dia);
 		
 		
-		List<String> resposta = new LinkedList<String>();
+		List<Ticket> resposta = new LinkedList<Ticket>();
 		for(Ticket t: tickets)
 		{
-			if(t.getData().getD)
+			if(t.getData().isEqual(dt))resposta.add(t);
 		}
 		return resposta;
 	}
-	
+	public List<Ticket> getTicketsLogMes(String mes)
+	{
+		int mesS = Integer.parseInt(mes);
+		
+		List<Ticket> resposta = new LinkedList<Ticket>();
+		for(Ticket t: tickets)
+		{
+			if(t.getData().getMonthValue() == mesS)resposta.add(t);
+		}
+		return resposta;
+	}
 	
 	public List<String> getTicketsAno()
 	{
