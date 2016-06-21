@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalTime;
+import java.util.LinkedList;
+import java.util.List;
 import java.time.LocalDate;
-
-import java.io.Serializable;
 
 public class Ticket implements Serializable {
 
@@ -33,7 +34,7 @@ public class Ticket implements Serializable {
 	
 	public String toString()
 	{
-		return idParquimetro + "-" + serial + " Endereco: " + endereco + " Emissão: " + emissao + " Validade: " + validade + " Pagamento: " + pagamento + " Data: " + data;
+		return idParquimetro + "-" + serial + " Endere�o: " + endereco + " Emissão: " + emissao + " Validade: " + validade + " Pagamento: " + pagamento + " Data: " + data;
 	}
 	
 	public String getIdParquimetro() {
