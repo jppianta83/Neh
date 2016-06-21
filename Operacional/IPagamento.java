@@ -1,4 +1,4 @@
-package operacional;
+package Operacional;
 
 import java.math.BigDecimal;
 

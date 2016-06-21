@@ -1,4 +1,4 @@
-package operacional;
+package Operacional;
 
 
 public class Mostrador {

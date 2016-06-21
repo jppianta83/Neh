@@ -1,4 +1,4 @@
-package operacional;
+package Operacional;
 import java.io.*;
 import java.math.BigDecimal;
 import java.sql.Time;
@@ -142,7 +142,8 @@ public class ModuloOperacional {
 		String pagamento = "";
 		if(p instanceof PagamentoMoeda)pagamento = "Moeda";
 		else pagamento = "Cart�o";
-		td.salvarTicket(new Ticket(prop.getProperty("id"), prop.getProperty("Endereco"), Integer.toString(serial, 5), LocalTime.now(), (LocalTime.now().plusMinutes(validade)), pagamento, tarifa));
+		
+		td.salvarTicket(new Ticket(prop.getProperty("ID"), prop.getProperty("Endereco"), Integer.toString(serial, 5), LocalTime.now(), (LocalTime.now().plusMinutes(validade)), pagamento, tarifa));
 		
 		return true;
 	}
