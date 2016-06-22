@@ -48,7 +48,6 @@ public class JanelaPrincipal extends javax.swing.JFrame implements ActionListene
         jComboBox2 = new javax.swing.JComboBox();
         jComboBox3 = new javax.swing.JComboBox();
         jComboBox4 = new javax.swing.JComboBox();
-        jComboBox4.addActionListener(this);
         jButton2 = new javax.swing.JButton();
         jButton2.addActionListener(this);
         jButton3 = new javax.swing.JButton();
@@ -84,7 +83,7 @@ public class JanelaPrincipal extends javax.swing.JFrame implements ActionListene
 
         //jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Mes", "Dia" }));
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
         
         jButton2.setText("Update");
 
@@ -92,9 +91,9 @@ public class JanelaPrincipal extends javax.swing.JFrame implements ActionListene
 
         jLabel1.setText("Seletor");
 
-        jLabel2.setText("Mes/Dia");
+        jLabel2.setText("Mes");
 
-        jLabel3.setText("Seletor");
+        jLabel3.setText("Dia");
 
         jLabel4.setText("Parquimetro");
 
@@ -196,7 +195,7 @@ public class JanelaPrincipal extends javax.swing.JFrame implements ActionListene
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JComboBox jComboBox3;
     private javax.swing.JComboBox jComboBox4;
-    private javax.swing.JPanel jInternalFrame1;
+    private Janela2 jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -229,8 +228,14 @@ public class JanelaPrincipal extends javax.swing.JFrame implements ActionListene
             List<String> aux;
             if(select.equals("Mes")) {
                 aux=facade.relatorioParquimetroMes(text);
+                jInternalFrame1.updateDataSet(aux, "mes");
+                this.revalidate();
+                this.repaint();
             } else {
                 aux=facade.relatorioParquimetroAno(text);
+                jInternalFrame1.updateDataSet(aux, "ano");
+                this.revalidate();
+                this.repaint();
             }
             
             jTextArea1.setText("");
@@ -252,10 +257,10 @@ public class JanelaPrincipal extends javax.swing.JFrame implements ActionListene
             String text = (String) jComboBox3.getSelectedItem();
             String select = (String) jComboBox4.getSelectedItem();
             List<String> aux;
-            if(select.equals("Mes")) {
+            if(select.equals("-")) {
                 aux=facade.logParquimetrosMes(text);
             } else {
-                aux=facade.logParquimetrosDia(text);
+                aux=facade.logParquimetrosDia(select+"-"+text+"-2016");
             }
             
             jTextArea2.setText("");

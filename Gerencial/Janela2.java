@@ -13,6 +13,7 @@ import java.awt.Container;
 import java.awt.Dimension;   
 import java.text.DecimalFormat;   
 import java.text.SimpleDateFormat;   
+import java.util.List;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;   
 import org.jfree.chart.*;   
@@ -31,18 +32,21 @@ import org.jfree.ui.RefineryUtilities;
 public class Janela2 extends JPanel   
 {   
    
+    
     /**  
      *   
      */   
+    private ChartPanel chartpanel;
     private static final long serialVersionUID = 1L;   
     static Class class$org$jfree$data$time$Year; /* synthetic field */   
-   
+    private JFreeChart jfreechart;
+    
     public Janela2()   
     {   
         super();   
         IntervalXYDataset intervalxydataset = createDataset();   
-        JFreeChart jfreechart = createChart(intervalxydataset);   
-        ChartPanel chartpanel = new ChartPanel(jfreechart);   
+        jfreechart = createChart(intervalxydataset);   
+        chartpanel = new ChartPanel(jfreechart);   
         chartpanel.setPreferredSize(new Dimension(500, 300));   
         setLayout(new BorderLayout());
         add(chartpanel, BorderLayout.NORTH);
@@ -50,11 +54,11 @@ public class Janela2 extends JPanel
    
     private static JFreeChart createChart(IntervalXYDataset intervalxydataset)   
     {   
-        JFreeChart jfreechart = ChartFactory.createXYBarChart("Dados Parquimetro", "Mes", true, "Ano", intervalxydataset, PlotOrientation.VERTICAL, true, false, false);           jfreechart.setBackgroundPaint(Color.white);   
+        JFreeChart jfreechart = ChartFactory.createXYBarChart("Dados Parquimetro", "Mes", true, "Dados", intervalxydataset, PlotOrientation.VERTICAL, true, false, false);           jfreechart.setBackgroundPaint(Color.white);   
         XYPlot xyplot = jfreechart.getXYPlot();   
         XYItemRenderer xyitemrenderer = xyplot.getRenderer();   
         StandardXYToolTipGenerator standardxytooltipgenerator = new StandardXYToolTipGenerator("{1} = {2}", new SimpleDateFormat("yyyy"), new DecimalFormat("0"));   
-        xyitemrenderer.setToolTipGenerator(standardxytooltipgenerator);   
+        //xyitemrenderer.setToolTipGenerator(standardxytooltipgenerator);   
         xyplot.setBackgroundPaint(Color.lightGray);   
         xyplot.setRangeGridlinePaint(Color.white);   
         DateAxis dateaxis = (DateAxis)xyplot.getDomainAxis();   
@@ -63,7 +67,107 @@ public class Janela2 extends JPanel
         dateaxis.setUpperMargin(0.01D);   
         return jfreechart;   
     }   
+    
+    private String[] splitMes(String s) {
+        String aux="";
+        String[] aux2=new String[3];
+        int cont=0;
+        for(int i=0; i<s.length(); i++) {
+            if(cont==0) {
+                if(s.charAt(i)=='-') {
+                    aux2[cont]=aux;
+                    cont++;
+                    aux="";
+                } else {
+                    aux=aux+s.charAt(i);
+                }
+            } else if(cont==1) {
+                if(s.charAt(i)==':') {
+                    aux2[cont]=aux;
+                    cont++;
+                    aux="";
+                } else {
+                    aux=aux+s.charAt(i);
+                }
+            } else {
+                if(s.charAt(i)!=' ') aux=aux+s.charAt(i);
+            }
+        }
+        aux2[2]=aux;
+        return aux2;
+    }
+    
+    private String[] splitAno(String s) {
+        String aux="";
+        String[] aux2=new String[2];
+        int cont=0;
+        for(int i=0; i<s.length(); i++) {
+            if(cont==0) {
+                if(s.charAt(i)==':') {
+                    aux2[cont]=aux;
+                    cont++;
+                    aux="";
+                } else {
+                    aux=aux+s.charAt(i);
+                }
+            } else {
+                if(s.charAt(i)!=' ') aux=aux+s.charAt(i);
+            }
+        }
+        aux2[1]=aux;
+        return aux2;
+    }
+    
+    private void update(IntervalXYDataset i) {
+        //chartpanel.remove(this);
+        IntervalXYDataset intervalxydataset = i;
+        this.remove(chartpanel);
+        jfreechart = createChart(i); 
+        chartpanel = new ChartPanel(jfreechart);
+        chartpanel.setPreferredSize(new Dimension(500, 300)); 
+        this.add(chartpanel, BorderLayout.NORTH);
+        this.revalidate();
+        this.repaint();
+    }
    
+    public void updateDataSet(List<String> l, String d) {
+        IntervalXYDataset intervalxydataset = updateDataset(l, d);
+        System.out.println("AQUI2");
+        update(intervalxydataset);
+    }
+    
+    private IntervalXYDataset updateDataset(List<String> l, String d) {
+        IntervalXYDataset i;
+        TimeSeries timeseries = new TimeSeries("Recebimento", "Year", "Count");
+        String[] aux;
+        if(d.equals("ano")) {
+            try {
+                System.out.println("AQUI");
+                for(String s:l) {
+                    aux=splitAno(s);
+                    System.out.println(aux[0]+" "+aux[1]);
+                    timeseries.add(new Year(Integer.parseInt(aux[0])), Float.parseFloat(aux[1]));
+                }
+            } catch(Exception exception) {    
+                System.err.println(exception.getMessage());   
+            } 
+        } else {
+             
+            try {
+                System.out.println("AQUI");
+                for(String s:l) {
+                    aux=splitMes(s);
+                    System.out.println(aux[0]+" "+aux[1]+" "+aux[2]);
+                    timeseries.add(new Month(Integer.parseInt(aux[0]),Integer.parseInt(aux[1])), Float.parseFloat(aux[2]));
+                }
+            } catch(Exception exception) {    
+                System.err.println(exception.getMessage());   
+            }  
+        }
+        TimeSeriesCollection timeseriescollection = new TimeSeriesCollection(timeseries);
+        return timeseriescollection;
+    } 
+    
     private static IntervalXYDataset createDataset()   
     {   
         TimeSeries timeseries = new TimeSeries("Recebimento", "Year", "Count");   
@@ -80,7 +184,7 @@ public class Janela2 extends JPanel
             System.err.println(exception.getMessage());   
         }   
         TimeSeriesCollection timeseriescollection = new TimeSeriesCollection(timeseries);   
-        timeseriescollection.setDomainIsPointsInTime(false);   
+        //timeseriescollection.setDomainIsPointsInTime(false);   
         return timeseriescollection;   
     }   
    
