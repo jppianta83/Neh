@@ -24,6 +24,7 @@ public class Repositorio {
 		}
 	}
 	
+	
 	public static Repositorio getRepositorio()
 	{
 		if(rep == null)
@@ -62,7 +63,7 @@ public class Repositorio {
 	}
 	
 	/* garante que o resultado será a lista de moeda contendo o valor do troco
-	 * se houver moedas suficiente no dic
+	 * ou menos
 	 */
 	public List<Moeda> troco(BigDecimal valorTroco){
 		List<Moeda> m = new ArrayList<Moeda>();
