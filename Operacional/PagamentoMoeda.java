@@ -17,7 +17,7 @@ public class PagamentoMoeda implements IPagamento {
 		return troco;
 	}
 	
-	/* requires val.compareTo(BigDecimal.ZERO) == 1
+	/* requires val.compareTo(BigDecimal.ZERO) == 1 && val != null
 	 * garante se na lista moedas tem o valor de val, resultado true
 	 * caso contrario false
 	 */

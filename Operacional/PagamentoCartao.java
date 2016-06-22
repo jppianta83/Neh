@@ -9,7 +9,8 @@ public class PagamentoCartao implements IPagamento{
 		car = umCartao;
 	}
 	
-	/* ensures \result == false ==> car.getSaldo().compareTo(val)== -1
+	/* requires val != null
+	 * ensures \result == false ==> car.getSaldo().compareTo(val)== -1
 	 * ensures \result ==> !(car.getSaldo().compareTo(val)== -1)
 	 * ensures car.getSaldo() == \old(car.getSaldo()).subtract(val)
 	 */
