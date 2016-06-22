@@ -3,17 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gerencial;
+package Operacional;
 
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.List;
 import javax.swing.JDesktopPane;
+import javax.swing.JFileChooser;
 import org.jfree.ui.RefineryUtilities;
 
 /**
  *
  * @author Jppianta
  */
-public class JanelaPrincipal extends javax.swing.JFrame {
+public class JanelaPrincipal extends javax.swing.JFrame implements ActionListener {
     
     public JanelaPrincipal() {
         initComponents();
@@ -29,18 +34,25 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jInternalFrame1 = new Janela("Teste");
+        File file;
+        jInternalFrame1 = new Janela2();
         jButton1 = new javax.swing.JButton();
+        jButton1.addActionListener(this);
+        fc = new JFileChooser();
+        
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
-        jComboBox1 = new javax.swing.JComboBox();
+        jTextArea3 = new javax.swing.JTextField();
         jComboBox2 = new javax.swing.JComboBox();
         jComboBox3 = new javax.swing.JComboBox();
         jComboBox4 = new javax.swing.JComboBox();
+        jComboBox4.addActionListener(this);
         jButton2 = new javax.swing.JButton();
+        jButton2.addActionListener(this);
         jButton3 = new javax.swing.JButton();
+        jButton3.addActionListener(this);
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -50,17 +62,6 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         setResizable(false);
 
         jInternalFrame1.setVisible(true);
-
-        javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
-        jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
-        jInternalFrame1Layout.setHorizontalGroup(
-            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 225, Short.MAX_VALUE)
-        );
-        jInternalFrame1Layout.setVerticalGroup(
-            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
 
         jButton1.setText("Load");
 
@@ -73,26 +74,29 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jTextArea2.setRows(5);
         jScrollPane2.setViewportView(jTextArea2);
         jTextArea2.setEditable(false);
+        
+      
+        
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Mes", "Ano" }));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        //jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Mes", "Dia" }));
+        
         jButton2.setText("Update");
 
         jButton3.setText("Update");
 
-        jLabel1.setText("Mês");
+        jLabel1.setText("Seletor");
 
-        jLabel2.setText("Mês");
+        jLabel2.setText("Mes/Dia");
 
-        jLabel3.setText("Dia");
+        jLabel3.setText("Seletor");
 
-        jLabel4.setText("Ano");
+        jLabel4.setText("Parquimetro");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -135,7 +139,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(75, 75, 75)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jTextArea3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(329, 329, 329))))))
         );
@@ -156,7 +160,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextArea3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -188,11 +192,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JTextField jTextArea3;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JComboBox jComboBox3;
     private javax.swing.JComboBox jComboBox4;
-    private javax.swing.JInternalFrame jInternalFrame1;
+    private javax.swing.JPanel jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -201,5 +205,67 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JFileChooser fc;
+    private String path;
+    private Facade facade=new Facade();
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == jButton1) {
+            int returnVal = fc.showOpenDialog(this);
+            if (returnVal == JFileChooser.APPROVE_OPTION)  {
+                path = fc.getSelectedFile().getAbsolutePath();
+                if (!facade.carregarArquivo(path)) {
+                    System.out.println("DEU MERDA");  
+            }
+            jTextArea1.setText("Ok");
+        }
+        }
+        if (e.getSource()== jButton2) {
+
+            String text = jTextArea3.getText();
+            String select = (String) jComboBox2.getSelectedItem();
+            List<String> aux;
+            if(select.equals("Mes")) {
+                aux=facade.relatorioParquimetroMes(text);
+            } else {
+                aux=facade.relatorioParquimetroAno(text);
+            }
+            
+            jTextArea1.setText("");
+            for(String s:aux) {
+                jTextArea1.setText(jTextArea1.getText()+"\n     "+s);
+                System.out.println(aux);
+            }
+        }
+        if (e.getSource() == jComboBox4) {
+            String aux = (String) jComboBox4.getSelectedItem();
+            if (aux.equals("Dia")) {
+                jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+            } else {
+                jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
+            }
+        }
+        if (e.getSource()== jButton3) {
+            System.out.println("AQUI");
+            String text = (String) jComboBox3.getSelectedItem();
+            String select = (String) jComboBox4.getSelectedItem();
+            List<String> aux;
+            if(select.equals("Mes")) {
+                aux=facade.logParquimetrosMes(text);
+            } else {
+                aux=facade.logParquimetrosDia(text);
+            }
+            
+            jTextArea2.setText("");
+            for(String s:aux) {
+                jTextArea2.setText(jTextArea2.getText()+"\n     "+s);
+                System.out.println(aux);
+            }
+        }
+    }
+
+
 }
+
