@@ -48,15 +48,15 @@ public class ModuloOperacionalTest {
 	    @Test
 	    public void testTempoEstadiaMinimo1() {
 	    	ModuloOperacional.botaoMais();
-	    	System.out.println("TempoEstadiaMinimo1:" + ModuloOperacional.tempoEstadia);
-	    	assertTrue(ModuloOperacional.tempoEstadia == 40);
+	    	System.out.println("TempoEstadiaMinimo1:" + ModuloOperacional.getTempoEstadia());
+	    	assertTrue(ModuloOperacional.getTempoEstadia() == 40);
 	    }
 	    
 	    @Test
 	    public void testTempoEstadiaMinimo2() {
 	    	ModuloOperacional.botaoMenos();
-	    	System.out.println("TempoEstadiaMinimo2:" + ModuloOperacional.tempoEstadia);
-	    	assertTrue(ModuloOperacional.tempoEstadia == 30);
+	    	System.out.println("TempoEstadiaMinimo2:" + ModuloOperacional.getTempoEstadia());
+	    	assertTrue(ModuloOperacional.getTempoEstadia() == 30);
 	    }
 	    
 	    //adicionar até 120
@@ -64,8 +64,8 @@ public class ModuloOperacionalTest {
 	    public void testTempoEstadiaMaximo1() {
 	    	for (int i = 0; i<9;i++) 
 	    		ModuloOperacional.botaoMais();
-	    	System.out.println("TempoEstadiaMaximo1:" + ModuloOperacional.tempoEstadia);
-	    	assertTrue(ModuloOperacional.tempoEstadia == 120);
+	    	System.out.println("TempoEstadiaMaximo1:" + ModuloOperacional.getTempoEstadia());
+	    	assertTrue(ModuloOperacional.getTempoEstadia() == 120);
 	    }
 	    
 	    //adicionar > 120
@@ -73,18 +73,19 @@ public class ModuloOperacionalTest {
 	    public void testTempoEstadiaMaximo2() {
 	    	for (int i = 0; i<10;i++) 
 	    		ModuloOperacional.botaoMais();
-	    	System.out.println("TempoEstadiaMaximo2:" + ModuloOperacional.tempoEstadia);
-	    	assertTrue(ModuloOperacional.tempoEstadia == 120);
+	    	System.out.println("TempoEstadiaMaximo2:" + ModuloOperacional.getTempoEstadia());
+	    	assertTrue(ModuloOperacional.getTempoEstadia() == 120);
 	    }
 	    
 	    @Test
 	    public void testBotaoVerde() throws InterruptedException
 	    {
+	    	
 	    	for(int i = 0; i<5 ; i++)
 	    		ModuloOperacional.botaoMais();
-	    	System.out.println(ModuloOperacional.tempoEstadia);
+	    	System.out.println(ModuloOperacional.getTempoEstadia());
 	    	ModuloOperacional.botaoVerde(pc);
-	    	System.out.println(ModuloOperacional.tempoEstadia);
+	    	System.out.println(ModuloOperacional.getTempoEstadia());
 	    	System.out.println("Muda hora");
 	    	TimeUnit.SECONDS.sleep(10);
 	    	for(int i = 0; i<2 ; i++)
