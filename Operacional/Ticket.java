@@ -13,7 +13,7 @@ public class Ticket implements Serializable {
 	private String endereco;
 	private String serial;
 	private String pagamento;
-	private  BigDecimal  valor;
+	private  BigDecimal valor;
 	private  LocalTime emissao;
 	private  LocalTime validade;
 	private  LocalDate data;

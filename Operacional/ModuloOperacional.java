@@ -11,7 +11,7 @@ public class ModuloOperacional {
 	private static Properties prop;
 	private static Mostrador most;
 	private static int serial;
-	public static long tempoEstadia;
+	private static long tempoEstadia;
 	private static LocalDate dataUltimoPagamento = LocalDate.of(1990,1,1);
 	private static TicketDao td = new TicketDaoDerby();
 	
@@ -225,6 +225,11 @@ public class ModuloOperacional {
 	public static boolean botaoVermelho(){
 		tempoEstadia = Long.parseLong(prop.getProperty("TempoMinimo"));
 		return true;
+	}
+	
+	public static long getTempoEstadia()
+	{
+		return tempoEstadia;
 	}
 
 }

@@ -89,23 +89,5 @@ public class Repositorio {
 	{
 		return totalValor;
 	}
-	
-	public static void main(String[] args){
-	
-		Repositorio temp = Repositorio.getRepositorio();
-		for(int i = 0; i < 8; i++)temp.addMoeda(Moeda.VINTECINCO);
-		for(int i = 0; i < 5; i++)temp.addMoeda(Moeda.CINCO);
-		for(int i = 0; i < 2; i++)temp.addMoeda(Moeda.UM);
-		System.out.println(temp.dic);
-		BigDecimal bd = new BigDecimal(4.22);
-		List<Moeda> lista = temp.troco(bd);
-		System.out.println(temp.dic);
-		System.out.println(lista);
-		BigDecimal totalTroco = BigDecimal.ZERO;
-    	for ( Moeda m : lista )
-    		totalTroco = totalTroco.add(m.valorMoeda());
-    	System.out.println(totalTroco);
-	}
-	
 
 }
