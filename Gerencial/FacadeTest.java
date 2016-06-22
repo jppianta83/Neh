@@ -17,6 +17,7 @@ public class FacadeTest {
 		{
 			fac = new Facade();
 			fac.carregarArquivo("1.se");
+			fac.carregarArquivo("tickes.se");
 		}
 	}
 

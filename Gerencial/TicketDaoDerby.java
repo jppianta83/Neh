@@ -1,4 +1,5 @@
 package Operacional;
+import java.util.LinkedList;
 import java.util.List;
 import java.io.*;
 
@@ -13,13 +14,12 @@ public class TicketDaoDerby implements TicketDao {
 				FileInputStream fis = new FileInputStream(path);
 				ObjectInputStream ois = new ObjectInputStream(fis);
 				tickets = (List<Ticket>) ois.readObject();
-
 				fis.close();
 				ois.close();
 			} catch (IOException i) {
 				i.printStackTrace();
 				return false;
-			} catch(ClassNotFoundException c) {
+			} catch(Exception c) {
 				c.printStackTrace();
 				return false;
 			}
@@ -28,6 +28,11 @@ public class TicketDaoDerby implements TicketDao {
 	public List<Ticket> carregarTickets(String path)
 	{
 		this.carregar(path);
+		if(tickets == null)
+			{
+				List<Ticket> temp =  new LinkedList<Ticket>();
+				return temp;
+			}
 		return tickets;
 	}	
 }
